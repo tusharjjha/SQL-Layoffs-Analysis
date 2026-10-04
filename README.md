@@ -1,110 +1,94 @@
-# SQL Data Cleaning – Layoffs Dataset
+# World Layoffs Data Cleaning & Exploratory Data Analysis Using SQL
 
-## About the Project
+## Project Overview
 
-For this project, I worked on cleaning a real-world layoffs dataset using MySQL. The dataset contains information about companies that have laid off employees, including their names, locations, industries, funding stages, number of employees laid off, and other related details.
+This project focuses on cleaning and exploring a real-world layoffs dataset using MySQL.
 
-Before starting any analysis, I wanted to make sure the data was consistent and properly organised. So, I went through the dataset and worked on identifying duplicates, correcting inconsistencies, handling missing values, and removing records that did not contain enough information.
+The project is divided into two main parts: Data Cleaning and Exploratory Data Analysis (EDA). The first part focuses on preparing the raw data by removing duplicates, handling missing values, standardizing inconsistent entries, and converting data types. After cleaning, the second part explores the dataset to identify patterns and trends in layoffs across companies, industries, countries, and years.
 
-The main purpose was to prepare the raw data for further analysis using SQL.
-
-## Dataset
-
-The dataset was taken from Kaggle:
-
-[Layoffs Dataset – Kaggle](https://www.kaggle.com/datasets/swaptr/layoffs-2022)
-
-It contains information about layoffs across different companies and industries.
-
-Some of the columns included in the dataset are:
-- Company
-- Location
-- Total Laid Off
-- Date
-- Percentage Laid Off
-- Industry
-- Source
-- Stage
-- Funds Raised
-- Country
-- Date Added
+The main objective was to practice SQL on a real-world dataset and understand how raw data can be cleaned and analyzed to find useful information.
 
 ## Tools Used
 
 - MySQL
 - MySQL Workbench
+- SQL
 
-## What I Did
+## Dataset
 
-### 1. Created Staging Tables
+The dataset contains information about company layoffs, including company names, locations, industries, total layoffs, percentage of workforce laid off, dates, funding stages, and funds raised.
 
-I started by creating staging tables so that I could work on a copy of the original data without modifying the raw table.
+**Dataset Source:** [Kaggle – Layoffs Dataset](https://www.kaggle.com/datasets/swaptr/layoffs-2022)
 
-### 2. Removed Duplicate Records
-
-I used `ROW_NUMBER()` with a CTE to identify duplicate records based on multiple columns. After checking the results, I removed the extra records from the staging table.
-
-### 3. Standardised the Data
-
-I checked different columns for inconsistent values and made corrections where needed.
-
-Some of the changes included:
-- Removing unnecessary spaces from company names using `TRIM()`.
-- Reviewing industry and location values.
-- Standardising the Vancouver location entry.
-
-### 4. Converted Date Formats
-
-The date column was initially stored as text. I used `STR_TO_DATE()` to convert the values into a proper date format and then changed the column's data type to `DATE`.
-
-### 5. Handled NULL and Blank Values
-
-I checked for missing and blank values, particularly in the industry column.
-
-Where possible, I used information from other records belonging to the same company to fill missing industry values. I also converted blank entries in the `funds_raised` and `stage` columns into `NULL`.
-
-### 6. Removed Incomplete Records
-
-I identified records where both `total_laid_off` and `percentage_laid_off` were missing and removed them, as they did not provide useful information for the analysis.
-
-### 7. Final Cleanup
-
-After completing the cleaning process, I removed the temporary `row_num` column that was used to identify duplicates.
-
-## SQL Concepts Practised
-
-While working on this project, I used the following SQL concepts:
-
-- Common Table Expressions (CTEs)
-- Window Functions
-- `ROW_NUMBER()`
-- `JOIN`
-- `TRIM()`
-- `STR_TO_DATE()`
-- `UPDATE` and `DELETE`
-- `ALTER TABLE`
-- `IS NULL`
-- Data type conversion
-
-## Repository Structure
+## Project Structure
 
 ```text
-SQL-Layoffs-Analysis/
+World-Layoffs-SQL-Analysis/
 │
 ├── README.md
 │
-└── data_cleaning/
-    └── MYSQL_PROJECT.sql
+├── MYSQL_PROJECT.sql
+│
+└── EXPLORATORY DATA ANALYSIS.sql
 ```
 
-## What I Learned
+## 1. Data Cleaning
 
-This project helped me understand how data cleaning works in practice, especially when dealing with missing values, duplicate records, and inconsistent data.
+The raw dataset was prepared before performing the analysis. The following operations were carried out:
 
-I also got more comfortable using CTEs, window functions, joins, and different SQL statements to solve data-related problems.
+### Duplicate Removal
+- Created staging tables to work with the raw data.
+- Used `ROW_NUMBER()` with a CTE to identify duplicate records.
+- Removed duplicate rows from the staging table.
 
-It was a good opportunity to move beyond writing individual SQL queries and work on a complete data cleaning process.
+### Standardizing Data
+- Removed unnecessary spaces from company names using `TRIM()`.
+- Standardized inconsistent location entries.
+- Converted the date column from text into the proper `DATE` format.
 
-## Next Step
+### Handling NULL and Blank Values
+- Identified missing and blank industry values.
+- Used a self-join to find available industry information for companies with missing values.
+- Converted blank values in the funds raised and stage columns into NULL.
 
-This project is the first part of my SQL portfolio. I plan to continue working with the same dataset and use the cleaned data for Exploratory Data Analysis (EDA), where I will look into different patterns and trends in company layoffs.
+### Removing Unnecessary Data
+- Removed records where both total layoffs and percentage laid off were missing.
+- Removed the temporary row number column used during duplicate identification.
+
+## 2. Exploratory Data Analysis (EDA)
+
+After cleaning the dataset, I explored it to understand different patterns in layoffs.
+
+The analysis included:
+
+- Finding the maximum total layoffs and percentage laid off.
+- Identifying companies with the highest number of layoffs.
+- Analyzing layoffs by industry.
+- Comparing layoffs across different countries.
+- Exploring layoffs by year and company stage.
+- Analyzing monthly layoffs.
+- Calculating cumulative layoffs using rolling totals.
+- Finding company-wise layoffs for each year.
+- Ranking the top five companies by layoffs for each year using `DENSE_RANK()`.
+
+## SQL Concepts Used
+
+Throughout the project, I worked with:
+
+- SELECT, WHERE, GROUP BY and ORDER BY
+- Aggregate functions such as SUM(), MAX() and MIN()
+- UPDATE, DELETE and ALTER TABLE
+- TRIM() and STR_TO_DATE()
+- JOINs and self-joins
+- Common Table Expressions (CTEs)
+- ROW_NUMBER()
+- DENSE_RANK()
+- Window functions
+- Rolling totals
+- Date and string functions
+
+## Key Learning Outcomes
+
+This project helped me gain practical experience in preparing raw data for analysis and working with SQL beyond basic queries.
+
+I practiced using joins, CTEs and window functions to handle data cleaning tasks and explore trends in a real-world dataset.
